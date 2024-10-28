@@ -1,0 +1,20 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add any custom global styles here */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #F9FAFB; /* Very Light Gray */
+  color: #111827; /* Dark Gray */
+}
+
+table th, table td {
+  font-size: 0.875rem; /* Smaller text for tables */
+  padding: 0.5rem 0.75rem; /* Adjusted padding for a compact feel */
+}
+
+button {
+  font-size: 0.875rem; /* Compact button text */
+}

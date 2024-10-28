@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "name": "John Doe",
+      "grade": "5th",
+      "parentContact": "john@example.com"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "grade": "6th",
+      "parentContact": "jane@example.com"
+    },
+    {
+      "id": 3,
+      "name": "Alice Johnson",
+      "grade": "4th",
+      "parentContact": "alice@example.com"
+    },
+    {
+        "id": 4,
+        "name": "Andrea",
+        "grade": "4th",
+        "parentContact": "andrea@example.com"
+      }
+  ]
+  

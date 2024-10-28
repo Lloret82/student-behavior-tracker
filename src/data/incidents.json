@@ -1,0 +1,21 @@
+[
+    {
+      "id": 1,
+      "studentId": 1,
+      "type": "Behavior Incident",
+      "details": "Disruptive behavior in class",
+      "date": "2023-10-20",
+      "recordedBy": "Alice Smith",
+      "actionTaken": "Verbal warning"
+    },
+    {
+      "id": 2,
+      "studentId": 2,
+      "type": "Positive Recognition",
+      "details": "Helped organize classroom materials",
+      "date": "2023-10-21",
+      "recordedBy": "Bob Johnson",
+      "actionTaken": "Praised in front of class"
+    }
+  ]
+  
