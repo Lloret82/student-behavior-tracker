@@ -1,44 +1,41 @@
+// src/components/Sidebar.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaHome, FaUser, FaUsers, FaPlusCircle, FaList } from 'react-icons/fa';
+import { FaSmile, FaFrown, FaStickyNote, FaExclamationCircle, FaSearch, FaUser, FaHome, FaSignOutAlt, FaList } from 'react-icons/fa';
 
-const Sidebar = () => {
-  return (
-    <div className="bg-gradient-primary text-gray-800 h-screen w-64 fixed flex flex-col shadow-hard">
-      <div className="p-4 text-2xl font-bold text-gray-900 shadow-sm">
-  Student Tracker
-</div>
-
-      <nav className="flex-grow">
-        <ul className="space-y-4 p-4">
-          <li>
-            <Link to="/dashboard" className="flex items-center space-x-2 text-gray-800 hover:bg-accent-light hover:text-gray-900 p-2 rounded">
-              <FaHome />
-              <span>Dashboard</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/students" className="flex items-center space-x-2 text-gray-800 hover:bg-accent-light hover:text-gray-900 p-2 rounded">
-              <FaUsers />
-              <span>Students</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/add-student" className="flex items-center space-x-2 text-gray-800 hover:bg-accent-light hover:text-gray-900 p-2 rounded">
-              <FaPlusCircle />
-              <span>Add Student</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/incidents" className="flex items-center space-x-2 text-gray-800 hover:bg-accent-light hover:text-gray-900 p-2 rounded">
-              <FaList />
-              <span>Incidents</span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
+const Sidebar = ({ schoolName }) => (
+  <div className="bg-gradient-primary text-white w-64 h-screen p-4">
+    <h2 className="text-xl font-bold mb-6">{schoolName || 'Student Tracker'}</h2>
+    <div className="space-y-4">
+      <Link to="/dashboard" className="flex items-center text-sm space-x-2">
+        <FaHome className="text-white" /> <span>Dashboard</span>
+      </Link>
+      <Link to="/add-incident/positive" className="flex items-center text-sm space-x-2">
+        <FaSmile className="text-green-500" /> <span>Positive</span>
+      </Link>
+      <Link to="/add-incident/negative" className="flex items-center text-sm space-x-2">
+        <FaFrown className="text-red-500" /> <span>Negative</span>
+      </Link>
+      <Link to="/add-incident/note" className="flex items-center text-sm space-x-2">
+        <FaStickyNote className="text-yellow-500" /> <span>Note</span>
+      </Link>
+      <Link to="/add-incident/concern" className="flex items-center text-sm space-x-2">
+        <FaExclamationCircle className="text-purple-500" /> <span>Concern</span>
+      </Link>
+      <Link to="/incidents" className="flex items-center text-sm space-x-2">
+        <FaList className="text-purple-500" /> <span>Incident List</span>
+      </Link>
+      <Link to="/search" className="flex items-center text-sm space-x-2">
+        <FaSearch /> <span>Search/Report</span>
+      </Link>
+      <Link to="/account" className="flex items-center text-sm space-x-2">
+        <FaUser /> <span>My Account</span>
+      </Link>
+      <Link to="/" className="flex items-center text-sm space-x-2">
+        <FaSignOutAlt /> <span>Logout</span>
+      </Link>
     </div>
-  );
-};
+  </div>
+);
 
 export default Sidebar;

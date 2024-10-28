@@ -1,39 +1,32 @@
-// src/App.jsx
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import AppRoutes from './routes';
 
-const LayoutWithSidebar = ({ children }) => (
+const LayoutWithSidebar = ({ children, schoolName }) => (
   <div className="flex">
-    {/* Sidebar */}
-    <Sidebar />
-
-    {/* Main Content with Navbar */}
+    <Sidebar schoolName={schoolName} />
     <div className="flex-1 flex flex-col">
       <Navbar />
-      
-      {/* Content Area with Top Padding to Avoid Overlap with Navbar */}
-      <div className="flex-1 pt-20 p-6 bg-background">
-        {children}
-      </div>
+      <div className="flex-1 pt-20 p-6 bg-background">{children}</div>
     </div>
   </div>
 );
 
 const App = () => {
+  const [schoolName, setSchoolName] = useState('');
   const location = useLocation();
-  const showLayout = location.pathname !== '/'; // Hide Sidebar and Navbar on Login Page
+  const showLayout = location.pathname !== '/';
 
   return (
     <div>
       {showLayout ? (
-        <LayoutWithSidebar>
-          <AppRoutes />
+        <LayoutWithSidebar schoolName={schoolName}>
+          <AppRoutes setSchoolName={setSchoolName} />
         </LayoutWithSidebar>
       ) : (
-        <AppRoutes />
+        <AppRoutes setSchoolName={setSchoolName} />
       )}
     </div>
   );

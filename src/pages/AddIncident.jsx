@@ -1,20 +1,53 @@
 // src/pages/AddIncident.jsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 
 const AddIncident = () => {
+  const { type } = useParams();  // Capture type from URL
   const [date, setDate] = useState('');
-  const [type, setType] = useState('');
+  const [incidentType, setIncidentType] = useState(''); // This will hold the type
   const [details, setDetails] = useState('');
   const [recordedBy, setRecordedBy] = useState('');
   const [actionTaken, setActionTaken] = useState('');
   const navigate = useNavigate();
 
+  // Set the incident type based on the URL parameter when component mounts
+  useEffect(() => {
+    switch (type) {
+      case 'positive':
+        setIncidentType('Positive Recognition');
+        break;
+      case 'negative':
+        setIncidentType('Behavior Incident');
+        break;
+      case 'note':
+        setIncidentType('Note');
+        break;
+      case 'concern':
+        setIncidentType('Concern');
+        break;
+      default:
+        setIncidentType('');
+    }
+  }, [type]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Mock saving logic; replace with actual API call later
-    console.log("Incident Added:", { date, type, details, recordedBy, actionTaken });
+
+    const newIncident = {
+      id: Date.now(),
+      date,
+      type: incidentType,
+      details,
+      recordedBy,
+      actionTaken,
+    };
+
+    const incidents = JSON.parse(localStorage.getItem('incidents')) || [];
+    incidents.push(newIncident);
+    localStorage.setItem('incidents', JSON.stringify(incidents));
+
     navigate('/incidents');
   };
 
@@ -39,17 +72,13 @@ const AddIncident = () => {
             <label htmlFor="type" className="block text-sm font-medium text-gray-700">
               Type
             </label>
-            <select
+            <input
+              type="text"
               id="type"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              className="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Select Type</option>
-              <option value="Behavior Incident">Behavior Incident</option>
-              <option value="Positive Recognition">Positive Recognition</option>
-              <option value="Intervention">Intervention</option>
-            </select>
+              value={incidentType}
+              readOnly
+              className="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100"
+            />
           </div>
           <div className="mb-4">
             <label htmlFor="details" className="block text-sm font-medium text-gray-700">

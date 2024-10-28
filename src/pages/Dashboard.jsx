@@ -4,7 +4,6 @@ import { fetchIncidents } from '../services/incidentService.js';
 import { fetchStudents } from '../services/studentService.js';
 import { Pie, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-import Button from '../components/Button.jsx';
 
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
@@ -34,6 +33,7 @@ const Dashboard = () => {
     return ((totalIncidents / schoolCapacity) * 100).toFixed(2);
   };
 
+  // Count incident types for the chart
   const behaviorTypeCounts = () => {
     const counts = { positive: 0, negative: 0 };
     incidents.forEach((incident) => {
@@ -48,6 +48,7 @@ const Dashboard = () => {
 
   const behaviorData = behaviorTypeCounts();
 
+  // Prepare data for the Pie chart
   const pieData = {
     labels: ['Positive Recognition', 'Behavior Incident'],
     datasets: [
@@ -59,6 +60,7 @@ const Dashboard = () => {
     ],
   };
 
+  // Prepare data for the Bar chart
   const barData = {
     labels: ['Positive', 'Negative'],
     datasets: [
@@ -72,7 +74,6 @@ const Dashboard = () => {
     ],
   };
 
-  // Determine the last incident for display
   const lastIncident = incidents.length > 0 ? incidents[incidents.length - 1] : null;
 
   if (loading) {
@@ -80,10 +81,9 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="container mx-auto p-20 bg-background mt-20 ">
-      <h1 className="text-2xl font-bold mb-6 text-primary"> Overview</h1>
+    <div className="container mx-auto p-20 bg-background mt-20">
+      <h1 className="text-2xl font-bold mb-6 text-primary">Overview</h1>
       
-      {/* Cards for Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
           <h2 className="text-sm font-medium text-muted mb-1">Total Incidents</h2>
@@ -108,54 +108,18 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Chart Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
           <h2 className="text-lg font-semibold text-primary mb-4">Incident Behavior Breakdown</h2>
-          <div className="w-48 h-48 mx-auto">
+          <div className="w-40 h-40 mx-auto">
             <Pie data={pieData} />
           </div>
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
           <h2 className="text-lg font-semibold text-primary mb-4">Incidents by Type</h2>
-          <div className="w-64 h-48 mx-auto">
+          <div className="w-48 h-32 mx-auto">
             <Bar data={barData} />
-          </div>
-        </div>
-      </div>
-
-      {/* Additional Large Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        {/* Last Incident Card */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <h2 className="text-lg font-semibold text-primary mb-4">Last Incident</h2>
-          {lastIncident ? (
-            <div>
-              <p className="text-sm text-muted">Student: <span className="text-primary">{lastIncident.studentName}</span></p>
-              <p className="text-sm text-muted">Type: <span className="text-primary">{lastIncident.type}</span></p>
-              <p className="text-sm text-muted">Date: <span className="text-primary">{lastIncident.date}</span></p>
-              <p className="text-sm text-muted">Details: <span className="text-primary">{lastIncident.details}</span></p>
-            </div>
-          ) : (
-            <p className="text-sm text-muted">No incidents recorded yet.</p>
-          )}
-        </div>
-
-        {/* Incident Summary Card */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <h2 className="text-lg font-semibold text-primary mb-4">Incident Summary</h2>
-          <div className="flex justify-between">
-            <p className="text-sm text-muted">Positive Incidents:</p>
-            <p className="text-primary font-bold">{behaviorData.positive}</p>
-          </div>
-          <div className="flex justify-between mt-2">
-            <p className="text-sm text-muted">Negative Incidents:</p>
-            <p className="text-primary font-bold">{behaviorData.negative}</p>
-          </div>
-          <div className="flex justify-between mt-2">
-            <p className="text-sm text-muted">Total Incidents:</p>
-            <p className="text-primary font-bold">{totalIncidents}</p>
           </div>
         </div>
       </div>
