@@ -1,34 +1,27 @@
 // src/pages/AddIncident.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import Button from '../components/Button.jsx';
 
 const AddIncident = () => {
-  const { type } = useParams();  // Capture type from URL
-  const [date, setDate] = useState('');
-  const [incidentType, setIncidentType] = useState(''); // This will hold the type
+  const { type } = useParams();  // Capture the type parameter from the URL
+  const [date, setDate] = useState(new Date());
+  const [incidentType, setIncidentType] = useState('');
   const [details, setDetails] = useState('');
   const [recordedBy, setRecordedBy] = useState('');
   const [actionTaken, setActionTaken] = useState('');
   const navigate = useNavigate();
 
-  // Set the incident type based on the URL parameter when component mounts
+  // Set the incidentType based on the URL parameter when component mounts
   useEffect(() => {
-    switch (type) {
-      case 'positive':
-        setIncidentType('Positive Recognition');
-        break;
-      case 'negative':
-        setIncidentType('Behavior Incident');
-        break;
-      case 'note':
-        setIncidentType('Note');
-        break;
-      case 'concern':
-        setIncidentType('Concern');
-        break;
-      default:
-        setIncidentType('');
+    if (type === 'positive') {
+      setIncidentType('Positive Recognition');
+    } else if (type === 'negative') {
+      setIncidentType('Behavior Incident');
+    } else {
+      setIncidentType(''); // Default if type is not provided or recognized
     }
   }, [type]);
 
@@ -37,18 +30,19 @@ const AddIncident = () => {
 
     const newIncident = {
       id: Date.now(),
-      date,
+      date: date.toLocaleDateString('en-CA'), // Format date as YYYY-MM-DD
       type: incidentType,
       details,
       recordedBy,
       actionTaken,
     };
 
+    // Save the new incident to local storage
     const incidents = JSON.parse(localStorage.getItem('incidents')) || [];
     incidents.push(newIncident);
     localStorage.setItem('incidents', JSON.stringify(incidents));
 
-    navigate('/incidents');
+    navigate('/incidents'); // Redirect to the incident list page after submission
   };
 
   return (
@@ -60,11 +54,10 @@ const AddIncident = () => {
             <label htmlFor="date" className="block text-sm font-medium text-gray-700">
               Date
             </label>
-            <input
-              type="date"
-              id="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
+            <DatePicker
+              selected={date}
+              onChange={(date) => setDate(date)}
+              dateFormat="yyyy-MM-dd"
               className="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
